@@ -13,21 +13,26 @@ struct CheckoutView: View {
     @ObservedObject var order: Order
        
     var body: some View {
-        Form {
-            Section {
-                TextField("Name", text: $order.name)
-                TextField("Street Address", text: $order.streetAddress)
-                TextField("City", text: $order.city)
-                TextField("Zip", text: $order.zip)
-            }
+        GeometryReader { geo in
+            ScrollView {
+                VStack {
+                    Image("cupcakes")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geo.size.width)
 
-            Section {
-                NavigationLink(destination: CheckoutView(order: order)) {
-                    Text("Check out")
+                    Text("Your total is $\(self.order.cost, specifier: "%.2f")")
+                        .font(.title)
+
+                    Button("Place Order") {
+                        // place the order
+                    }
+                    .padding()
                 }
             }
         }
-        .navigationBarTitle("Delivery details", displayMode: .inline)    }
+        .navigationBarTitle("Check out", displayMode: .inline)
+    }
 }
 
 struct CheckoutView_Previews: PreviewProvider {
